@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const server = express();
 const { readFile } = require('fs').promises;
 const ejs = require('ejs');
@@ -7,7 +7,13 @@ const ejs = require('ejs');
 require('dotenv').config();
 
 const port = 8080;
-const client = new MongoClient(process.env.URI);
+const client = new MongoClient(process.env.URI, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
 const dataBaseName = "recipe_site";
 const collectionName = "recipes";
 
